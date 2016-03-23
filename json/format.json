@@ -1,11 +1,11 @@
 {
+"ip" : "CHANGEIP",
 "unixtime": "CHANGEUNIXTIME",
 "date": "CHANGEDATE",
-"version" : "CHANGEVERSION",
 "uptime" : "CHANGEUPTIME",
 "memstat" : "CHANGEMEM",
 "openports" : "CHANGEPORTS",
 "id" : "CHANGEID",
-"ip" : "CHANGEIP",
+"version" : "CHANGEVERSION",
 "cmdline" : "CHANGECMDLINE",
 "output" : "
