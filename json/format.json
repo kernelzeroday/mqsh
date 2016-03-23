@@ -1,6 +1,7 @@
 {
 "version" : "CHANGEVERSION",
 "date": "CHANGEDATE",
+"unixtime": "CHANGEUNIXTIME",
 "uptime" : "CHANGEUPTIME",
 "memstat" : "CHANGEMEM",
 "openports" : "CHANGEPORTS",
