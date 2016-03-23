@@ -1,31 +1,33 @@
 #!/usr/bin/env node
 
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('ddos.db');
-
 var irc = require('irc');
 
+//set up the db file
+var db = new sqlite3.Database('ddos.db');
+//set up irc connection
 var bot = new irc.Client('localhost', 'ddosbot', {
     debug: true,
     channels: ['#ddos']
 });
-
+//error listener
 bot.addListener('error', function(message) {
     console.error('ERROR: %s: %s', message.command, message.args.join(' '));
 });
-
-bot.addListener('message#blah', function(from, message) {
+//log channel to console
+bot.addListener('message#ddos', function(from, message) {
     console.log('<%s> %s', from, message);
 });
-
+//cmds
 bot.addListener('message', function(from, to, message) {
     console.log('%s => %s: %s', from, to, message);
-
+//hello world
     if (to.match(/^[#&]/)) {
         // channel message
         if (message.match(/hello/i)) {
             bot.say(to, 'Hello there ' + from);
         }
+//settimeout example
 //        if (message.match(/dance/)) {
  //           setTimeout(function() { bot.say(to, '\u0001ACTION dances: :D\\-<\u0001'); }, 1000);
   //          setTimeout(function() { bot.say(to, '\u0001ACTION dances: :D|-<\u0001');  }, 2000);
@@ -51,19 +53,20 @@ bot.addListener('kick', function(channel, who, by, reason) {
     console.log('%s was kicked from %s by %s: %s', who, channel, by, reason);
 });
 
+//example sql
+//db.serialize(function() {
+//  db.run("CREATE TABLE lorem (info TEXT)");
+//
+//  var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
+//  for (var i = 0; i < 10; i++) {
+//      stmt.run("Ipsum " + i);
+//  }
+//  stmt.finalize();
+//
+//  db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
+//      console.log(row.id + ": " + row.info);
+//  });
+//});
+//db.close();
 
-db.serialize(function() {
-  db.run("CREATE TABLE lorem (info TEXT)");
 
-  var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-  for (var i = 0; i < 10; i++) {
-      stmt.run("Ipsum " + i);
-  }
-  stmt.finalize();
-
-  db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-      console.log(row.id + ": " + row.info);
-  });
-});
-
-db.close();
