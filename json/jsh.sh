@@ -2,7 +2,8 @@
 #make a cmd json
 ip=`/sbin/ifconfig lo | grep Mask | cut -d ':' -f2 | cut -d " " -f1`
 date=`date +%s`
-cat format.json | sed "s/CHANGEIP/$ip/" | sed "s/CHANGEDATE/$date/" > data.json
+cmdline="$@"
+cat format.json | sed "s/CHANGEIP/$ip/" | sed "s/CHANGEDATE/$date/" | sed "s/CHANGECMDLINE/$cmdline/"> data.json
 #cat /dev/stdin>> data.json
 sh -c "$@" >> data.json
 echo \"\}\ >> data.json

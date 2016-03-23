@@ -1,0 +1,1 @@
+busybox mqtte -i 127.0.0.1 -t shell -t shell/127.0.0.1 -h localhost -- /home/kod/bin/jsonsh | mosquitto_pub -t data -h localhost -l

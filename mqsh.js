@@ -1,4 +1,3 @@
-
 //mqsh.js
 // depends on mqtt, colors, readcommand, corporal
 // async shell for infinite number of clients

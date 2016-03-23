@@ -1,4 +1,5 @@
 {
         "date": "CHANGEDATE",
 	"ip" : "CHANGEIP",
+	"cmdline" : "CHANGECMDLINE",
 	"output" : "
