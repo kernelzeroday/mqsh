@@ -7,5 +7,7 @@
 "openports" : "CHANGEPORTS",
 "id" : "CHANGEID",
 "version" : "CHANGEVERSION",
+"kernel_cmdline": "CHANGEKERNELCMDLINE",
+"kernel_crypto": "CHANGEKCRYPTO",
 "cmdline" : "CHANGECMDLINE",
 "output" : "
