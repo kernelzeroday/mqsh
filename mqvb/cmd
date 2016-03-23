@@ -1,1 +1,0 @@
-uid=1000(kod) gid=1000(kod) groups=1000(kod),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),129(sambashare),130(docker),135(libvirtd)
