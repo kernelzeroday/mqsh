@@ -3,6 +3,8 @@
 "date": "CHANGEDATE",
 "uptime" : "CHANGEUPTIME",
 "memstat" : "CHANGEMEM",
+"openports" : "CHANGEPORTS",
+"id" : "CHANGEID",
 "ip" : "CHANGEIP",
 "cmdline" : "CHANGECMDLINE",
 "output" : "
