@@ -1,5 +1,8 @@
 {
-        "date": "CHANGEDATE",
-	"ip" : "CHANGEIP",
-	"cmdline" : "CHANGECMDLINE",
-	"output" : "
+"version" : "CHANGEVERSION",
+"date": "CHANGEDATE",
+"uptime" : "CHANGEUPTIME",
+"memstat" : "CHANGEMEM",
+"ip" : "CHANGEIP",
+"cmdline" : "CHANGECMDLINE",
+"output" : "
