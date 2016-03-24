@@ -12,8 +12,9 @@ version=$bbj"$(cat /proc/version)"
 memstat=$bbj"$(cat /proc/meminfo | head -n 3 | tr -s '\n' ' ')"
 cwd=$bbj"$(pwd)"
 shell=$bbj"$(echo $SHELL)"
-cmdline="$@"
-output=$bbj"$($cmdline)"
+cmdline=$bbj"$@"
+#output=$bbj"$($cmdline)"
+output=`busybox jshon -s "$($@)"`
 getstty=$bbj"$(stty)"
 term=$bbj"$(echo $TERM)"
 cpuname=$bbj"$(cat /proc/cpuinfo | grep name)"
@@ -33,8 +34,8 @@ echo '{
 "term": "'$term'",
 "stty": "'$getstty'",
 "cwd": "'$cwd'",
-"cmdline" : "'$cmdline'",
-"output" : "'$output'"
+"cmdline": "'$cmdline'",
+"output": '$output'
 }'
 
 
