@@ -1,5 +1,8 @@
 Json /bin/sh wrapper script for outputting shell commands as json objects for use in fancypants webdev programming or whatever
 
+NOTE: pipes are not working for some reason. ill fix it eventually. same with semicolons, fuck, who the fuck knows why
+
+
 Exmaple mqtte call:
 busybox mqtte -i 127.0.0.1 -t shell -t shell/127.0.0.1 -h localhost -- /home/kod/bin/jsonsh | mosquitto_pub -t data -h localhost -l
 
