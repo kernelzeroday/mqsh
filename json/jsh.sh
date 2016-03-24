@@ -1,7 +1,7 @@
 #!/bin/sh
 #make a cmd json
 bbj=`busybox jshon -s `
-ip=$bbj''"$(/sbin/ifconfig lo | grep Mask | cut -d ':' -f2 | cut -d " " -f1)"''
+ip=$bbj"$(/sbin/ifconfig lo | grep Mask | cut -d ':' -f2 | cut -d " " -f1)"
 unixtime=$bbj"$(date +%s)"
 date=$bbj"$(date)"
 uptime=$bbj"$(uptime | sed s/\,//)"
@@ -35,7 +35,7 @@ echo '{
 "cwd": "'$cwd'",
 "cmdline" : "'$cmdline'",
 "output" : "'$output'"
-"}'
+}'
 
 
 
