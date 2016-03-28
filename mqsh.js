@@ -325,7 +325,7 @@ if (argv.btcrpcport)
 }
 
 
-if (argv.rpc)
+if (argv.callrpc)
 {
 	btcrpc();
 }
@@ -343,7 +343,7 @@ if (argv.upload)
 }
 
 
-if (argv.i)
+if (argv.interactive)
 {
 	console.log('welcome to mqsh type help to begin');
 	startinteractive();
