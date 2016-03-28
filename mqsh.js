@@ -18,19 +18,21 @@ var argv = require('optimist').argv;
 var fs = require('fs');
 var bitcoin = require('bitcoin');
 // function to encode file data to base64 encoded string
-function base64_encode(file) {
-    // read binary data
-    var bitmap = fs.readFileSync(file);
-    // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
+function base64_encode(file)
+{
+	// read binary data
+	var bitmap = fs.readFileSync(file);
+	// convert binary data to base64 encoded string
+	return new Buffer(bitmap).toString('base64');
 }
+
 
 //function for beginning a mqtt connection to a server, listening to topic defined by subtopic and publishing to pubtopic
 function shell ()
 {
 	//this is where we connect
-        var client  = mqtt.connect('mqtt://' + servername);
-        console.log("mqtt.connect " + servername);
+	var client  = mqtt.connect('mqtt://' + servername);
+	console.log("mqtt.connect " + servername);
 
 	///on client connection, we subscribe to the subtopic
 	client.on('connect', function ()
@@ -44,7 +46,7 @@ function shell ()
 	{
 		// message is Buffer
 		//console.log("");
-			console.log(colors.yellow(message.toString()));
+		console.log(colors.yellow(message.toString()));
 		//  client.end();
 	});
 
@@ -75,9 +77,9 @@ function shell ()
 		{
 			sigints = 0;
 		}
-		
+
 		// handle the input and send to pubtopic
-		
+
 		//console.log('Received args: %s', JSON.stringify(args));
 
 		client.publish(pubtopic, args.join(" "));
@@ -87,6 +89,62 @@ function shell ()
 
 }
 
+
+//bit rpc shell
+function btcrpc()
+{
+
+	var bitrpc = new bitcoin.Client(
+	{
+		host: btcrpchost,
+			port: btcport,
+			user: btcuser,
+			pass: btcpw,
+			timeout: 30000
+	});
+
+	//for handling control c
+	var sigints = 0;
+	readcommand.loop(function(err, args, str, next)
+	{
+		if (err && err.code !== 'SIGINT')
+		{
+			throw err;
+		}
+		else if (err)
+		{
+			if (sigints === 1)
+			{
+				//	callback();
+				process.exit(0);
+					;
+			}
+			else
+			{
+				sigints++;
+					console.log('Press ^C again to exit.');
+					return next();
+			}
+		}
+		else
+		{
+			sigints = 0;
+		}
+
+		// handle the input and send to pubtopic
+
+		//console.log('Received args: %s', JSON.stringify(args));
+		bitrpc.cmd(args.join(" "), function(err, data)
+		{
+			if (err) return console.log(err);
+				console.log(data);
+		}
+		);
+
+			return next();
+	});
+
+}
 
 
 //function to handle the initial tui
@@ -107,7 +165,7 @@ var corporal = new Corporal(
 				//		callback();
 			}
 		},
-			//hello world example
+		//hello world example
 			'echo':
 		{
 			'description': 'echo',
@@ -117,7 +175,7 @@ var corporal = new Corporal(
 					callback();
 			}
 		},
-			//get currently selected environment variables
+		//get currently selected environment variables
 			'server':
 		{
 			'description': 'current server',
@@ -128,79 +186,80 @@ var corporal = new Corporal(
 					callback();
 			}
 		},
-                        'subtopic':
-                {
-                        'description': 'current subscription topic',
-                                'invoke': function(session, args, callback)
-                        {
-                                //session.stdout().write(args[0] + '\n');
-                                console.log(subtopic);
-                                        callback();
-                        }
-                },
-                        'pubtopic':
-                {
-                        'description': 'current publish topic',
-                                'invoke': function(session, args, callback)
-                        {
-                                //session.stdout().write(args[0] + '\n');
-                                console.log(pubtopic);
-                                        callback();
-                        }
-                },
-			//not working correctly, currently being called manually by shell()
-                        'connect':
-                {
-                        'description': 'connect to current server',
-                                'invoke': function(session, args, callback)
-                        {
-                                //session.stdout().write(args[0] + '\n');
-                                console.log(servername);
-					startlistener();
-                                        callback();
-                        }
-                },
-			//functions to change variables
-                        'chpub':
-                {
-                        'description': 'change pubtopic',
-                                'invoke': function(session, args, callback)
-                        {
-                                        console.log(colors.yellow('changing publish topic to ') + colors.magenta(args));
-                                        pubtopic = args;
-                                        callback();
-                        }
-                },
-                        'chsub':
-                {
-                        'description': 'change subtopic',
-                                'invoke': function(session, args, callback)
-                        {
-                                        console.log(colors.yellow('changing subscription topic to ') + colors.magenta(args));
-                                	subtopic = args;
+			'subtopic':
+		{
+			'description': 'current subscription topic',
+				'invoke': function(session, args, callback)
+			{
+				//session.stdout().write(args[0] + '\n');
+				console.log(subtopic);
 					callback();
-                        }
-                },
+			}
+		},
+			'pubtopic':
+		{
+			'description': 'current publish topic',
+				'invoke': function(session, args, callback)
+			{
+				//session.stdout().write(args[0] + '\n');
+				console.log(pubtopic);
+					callback();
+			}
+		},
+		//not working correctly, currently being called manually by shell()
+			'connect':
+		{
+			'description': 'connect to current server',
+				'invoke': function(session, args, callback)
+			{
+				//session.stdout().write(args[0] + '\n');
+				console.log(servername);
+					startlistener();
+					callback();
+			}
+		},
+		//functions to change variables
+			'chpub':
+		{
+			'description': 'change pubtopic',
+				'invoke': function(session, args, callback)
+			{
+				console.log(colors.yellow('changing publish topic to ') + colors.magenta(args));
+					pubtopic = args;
+					callback();
+			}
+		},
+			'chsub':
+		{
+			'description': 'change subtopic',
+				'invoke': function(session, args, callback)
+			{
+				console.log(colors.yellow('changing subscription topic to ') + colors.magenta(args));
+					subtopic = args;
+					callback();
+			}
+		},
 
-
-			'chserv': 
+			'chserv':
 		{
 			'description': 'change mqtt server',
 				'invoke': function(session, args, callback)
 			{
 				console.log(colors.yellow('changing mqtt server to ') + colors.magenta(args));
-				servername = args;
-				callback();
-			}			
+					servername = args;
+					callback();
+			}
 		}
 
 	}
 });
 //function to start tui
-function startinteractive () 
+function startinteractive ()
 {
 	corporal.on('load', corporal.loop);
 }
+
+
 // set up variables for use in shell data pipe
 var subtopic = 'data'
 var pubtopic = 'shell'
@@ -217,28 +276,70 @@ if (argv.h)
 {
 	servername = argv.h;
 }
-        if (argv.pt)
+
+
+if (argv.pt)
 {
-        pubtopic = argv.pt;
+	pubtopic = argv.pt;
 }
-        if (argv.st)
+
+
+if (argv.st)
 {
-        subtopic = argv.st;
+	subtopic = argv.st;
 }
-if (argv.s) {
-	shell();	
+
+
+if (argv.s)
+{
+	shell();
 }
-if (argv.upload) {
+
+
+if (argv.btcrpchost)
+{
+	var btcrpchost = argv.btcrpchost;
+}
+
+
+if (argv.btcpw)
+{
+	var btcpw = argv.btcpw;
+}
+
+
+if (argv.btcuser)
+{
+	var btcuser = argv.btcuser;
+}
+
+
+if (argv.btcrpcport)
+{
+	var btcrpcport = argv.btcrpcport;
+}
+
+
+if (argv.rpc)
+{
+	btcrpc();
+}
+
+
+if (argv.upload)
+{
 	// convert image to base64 encoded string
 	var base64str = base64_encode(argv.upload);
 	console.log(base64str);
-        var client  = mqtt.connect('mqtt://' + servername);
-        console.log("mqtt.connect " + servername);
+	var client  = mqtt.connect('mqtt://' + servername);
+	console.log("mqtt.connect " + servername);
 	client.publish(pubtopic, '_binary_' + ' ' + argv.upload + ' ' +  base64str);
-	exit 0;
+	return 0;
 }
-else {
+
+
+if (argv.i)
+{
 	console.log('welcome to mqsh type help to begin');
 	startinteractive();
 }
-
