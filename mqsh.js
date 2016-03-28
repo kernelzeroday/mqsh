@@ -91,12 +91,17 @@ function shell ()
 
 
 //bit rpc shell
+var btchost = 'localhost';
+var btcport = '18832';
+var btcuser = 'kod';
+var btcpw = 'password';
 function btcrpc()
 {
+console.log('rpc start...');
 
 	var bitrpc = new bitcoin.Client(
 	{
-		host: btcrpchost,
+		host: btchost,
 			port: btcport,
 			user: btcuser,
 			pass: btcpw,
