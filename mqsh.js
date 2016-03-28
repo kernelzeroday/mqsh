@@ -15,6 +15,16 @@ var Corporal = require('corporal');
 var colors = require("colors/safe");
 var readcommand = require('readcommand');
 var argv = require('optimist').argv;
+var fs = require('fs');
+var bitcoin = require('bitcoin');
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
 //function for beginning a mqtt connection to a server, listening to topic defined by subtopic and publishing to pubtopic
 function shell ()
 {
@@ -22,7 +32,7 @@ function shell ()
         var client  = mqtt.connect('mqtt://' + servername);
         console.log("mqtt.connect " + servername);
 
-	//on client connection, we subscribe to the subtopic
+	///on client connection, we subscribe to the subtopic
 	client.on('connect', function ()
 	{
 		client.subscribe(subtopic);
@@ -76,6 +86,8 @@ function shell ()
 	});
 
 }
+
+
 
 //function to handle the initial tui
 var corporal = new Corporal(
@@ -215,6 +227,15 @@ if (argv.h)
 }
 if (argv.s) {
 	shell();	
+}
+if (argv.upload) {
+	// convert image to base64 encoded string
+	var base64str = base64_encode(argv.upload);
+	console.log(base64str);
+        var client  = mqtt.connect('mqtt://' + servername);
+        console.log("mqtt.connect " + servername);
+	client.publish(pubtopic, '_binary_' + ' ' + argv.upload + ' ' +  base64str);
+	exit 0;
 }
 else {
 	console.log('welcome to mqsh type help to begin');
