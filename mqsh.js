@@ -278,19 +278,19 @@ if (argv.h)
 }
 
 
-if (argv.pt)
+if (argv.pubtopic)
 {
-	pubtopic = argv.pt;
+	pubtopic = argv.pubtopic;
 }
 
 
-if (argv.st)
+if (argv.subtopic)
 {
-	subtopic = argv.st;
+	subtopic = argv.subtopic;
 }
 
 
-if (argv.s)
+if (argv.shell)
 {
 	shell();
 }
