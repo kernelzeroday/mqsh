@@ -295,37 +295,37 @@ if (argv.subtopic)
 }
 
 
-if (argv.shell)
+if (argv.s)
 {
 	shell();
 }
 
 
-if (argv.btcrpchost)
+if (argv.btchost)
 {
-	var btcrpchost = argv.btcrpchost;
+	btchost = argv.btchost;
 }
 
 
 if (argv.btcpw)
 {
-	var btcpw = argv.btcpw;
+	btcpw = argv.btcpw;
 }
 
 
 if (argv.btcuser)
 {
-	var btcuser = argv.btcuser;
+	btcuser = argv.btcuser;
 }
 
 
-if (argv.btcrpcport)
+if (argv.btcport)
 {
-	var btcrpcport = argv.btcrpcport;
+	btcport = argv.btcport;
 }
 
 
-if (argv.callrpc)
+if (argv.r)
 {
 	btcrpc();
 }
@@ -343,7 +343,7 @@ if (argv.upload)
 }
 
 
-if (argv.interactive)
+if (argv.i)
 {
 	console.log('welcome to mqsh type help to begin');
 	startinteractive();
