@@ -136,8 +136,7 @@ console.log('rpc start...');
 //  console.log('Balance:', balance);
 //});
 
-                var rpcresponse = exec('bitcoin-cli -regtest -rpcuser='+rpcuser+' -rpcpassword='+rpcpassword+' '+(args.join(" ")));
-                console.log(rpcresponse.stdout);
+                exec('bitcoin-cli -regtest -rpcuser='+rpcuser+' -rpcpassword='+rpcpassword+' '+(args.join(" "))).stdout;
 
 
 			return next();
