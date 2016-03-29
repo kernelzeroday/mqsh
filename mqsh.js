@@ -92,8 +92,8 @@ function shell ()
 
 //bit rpc shell
 var btchost = 'localhost';
-var btcport = '18832';
-var btcuser = 'kod';
+var btcport = '18332';
+var btcuser = 'user';
 var btcpw = 'password';
 function btcrpc()
 {
@@ -139,12 +139,13 @@ console.log('rpc start...');
 		// handle the input and send to pubtopic
 
 		//console.log('Received args: %s', JSON.stringify(args));
-		bitrpc.cmd(args, function(err, data)
-		{
-			if (err) return console.log(err);
-				console.log(data);
-		}
-		);
+		bitrpc.cmd(args.join(" "), function(err, balance, resHeaders){
+  if (err) return console.log(err);
+  console.log('Balance:', balance);
+
+});
+
+
 
 			return next();
 	});
@@ -283,15 +284,15 @@ if (argv.h)
 }
 
 
-if (argv.pubtopic)
+if (argv.p)
 {
-	pubtopic = argv.pubtopic;
+	pubtopic = argv.p;
 }
 
 
-if (argv.subtopic)
+if (argv.t)
 {
-	subtopic = argv.subtopic;
+	subtopic = argv.t;
 }
 
 
@@ -301,27 +302,27 @@ if (argv.s)
 }
 
 
-if (argv.btchost)
+if (argv.j)
 {
-	btchost = argv.btchost;
+	btchost = argv.j;
 }
 
 
-if (argv.btcpw)
+if (argv.q)
 {
-	btcpw = argv.btcpw;
+	btcpw = argv.q;
 }
 
 
-if (argv.btcuser)
+if (argv.e)
 {
-	btcuser = argv.btcuser;
+	btcuser = argv.e;
 }
 
 
-if (argv.btcport)
+if (argv.n)
 {
-	btcport = argv.btcport;
+	btcport = argv.n;
 }
 
 
@@ -331,7 +332,7 @@ if (argv.r)
 }
 
 
-if (argv.upload)
+if (argv.u)
 {
 	// convert image to base64 encoded string
 	var base64str = base64_encode(argv.upload);
