@@ -139,7 +139,7 @@ console.log('rpc start...');
 		// handle the input and send to pubtopic
 
 		//console.log('Received args: %s', JSON.stringify(args));
-		bitrpc.cmd(args.join(" "), function(err, data)
+		bitrpc.cmd(args, function(err, data)
 		{
 			if (err) return console.log(err);
 				console.log(data);
