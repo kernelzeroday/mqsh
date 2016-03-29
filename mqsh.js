@@ -17,6 +17,7 @@ var readcommand = require('readcommand');
 var argv = require('optimist').argv;
 var fs = require('fs');
 var bitcoin = require('bitcoin');
+require('shelljs/global');
 // function to encode file data to base64 encoded string
 function base64_encode(file)
 {
@@ -99,15 +100,6 @@ function btcrpc()
 {
 console.log('rpc start...');
 
-	var bitrpc = new bitcoin.Client(
-	{
-		host: btchost,
-			port: btcport,
-			user: btcuser,
-			pass: btcpw,
-			timeout: 30000
-	});
-
 	//for handling control c
 	var sigints = 0;
 	readcommand.loop(function(err, args, str, next)
@@ -139,12 +131,13 @@ console.log('rpc start...');
 		// handle the input and send to pubtopic
 
 		//console.log('Received args: %s', JSON.stringify(args));
-		bitrpc.cmd(args.join(" "), function(err, balance, resHeaders){
-  if (err) return console.log(err);
-  console.log('Balance:', balance);
+//		bitrpc.cmd(args.join(" "), function(err, balance, resHeaders){
+//  if (err) return console.log(err);
+//  console.log('Balance:', balance);
+//});
 
-});
-
+                var rpcresponse = exec('bitcoin-cli -regtest -rpcuser='+rpcuser+' -rpcpassword='+rpcpassword+' '+(args.join(" ")));
+                console.log(rpcresponse.stdout);
 
 
 			return next();
@@ -342,6 +335,8 @@ if (argv.u)
 	client.publish(pubtopic, '_binary_' + ' ' + argv.upload + ' ' +  base64str);
 	return 0;
 }
+if (argv.e) {rpcuser = argv.e}
+if (argv.q) {rpcpassword = argv.q}
 
 
 if (argv.i)
