@@ -136,7 +136,7 @@ console.log('rpc start...');
 //  console.log('Balance:', balance);
 //});
 
-                exec('bitcoin-cli -regtest -rpcuser='+rpcuser+' -rpcpassword='+rpcpassword+' '+(args.join(" "))).stdout;
+                colors.yellow(exec('bitcoin-cli -regtest -rpcuser='+rpcuser+' -rpcpassword='+rpcpassword+' '+(args.join(" "))).stdout);
 
 
 			return next();
@@ -247,7 +247,16 @@ var corporal = new Corporal(
 					servername = args;
 					callback();
 			}
-		}
+		},
+
+                        'rpc':
+                {
+                        'description': 'call bitcoin rpc shell',
+                                'invoke': function(session, args, callback)
+                        {
+				btcrpc();
+                        }
+                }
 
 	}
 });
