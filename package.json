@@ -1,0 +1,39 @@
+{
+  "name": "mqsh",
+  "version": "0.0.1",
+  "description": "shell handler",
+  "main": "mqsh.js",
+  "dependencies": {
+    "bitcoin": "^3.0.1",
+    "colors": "^1.1.2",
+    "fs": "^0.0.2",
+    "infinite-loop": "^0.2.2",
+    "irc": "^0.4.1",
+    "node-getopt": "^0.2.3",
+    "optimist": "^0.6.1",
+    "prompt": "^1.0.0",
+    "readcommand": "^0.3.0",
+    "shelljs": "^0.6.0",
+    "sleep": "^3.0.1",
+    "sqlite": "^0.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kernelzeroday/mqsh.git"
+  },
+  "keywords": [
+    "mqtt",
+    "json",
+    "shell"
+  ],
+  "author": "kod",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/kernelzeroday/mqsh/issues"
+  },
+  "homepage": "https://github.com/kernelzeroday/mqsh#readme"
+}
