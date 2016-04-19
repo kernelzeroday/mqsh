@@ -353,9 +353,9 @@ if (argv.u)
 {
 	mquser = argv.u;
 }
-if (argv.p)
+if (argv.m)
 {
-	mqpasswd = argv.p;
+	mqpasswd = argv.m;
 }
 if (argv.u)
 {
