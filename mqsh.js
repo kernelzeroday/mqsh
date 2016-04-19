@@ -27,17 +27,19 @@ function base64_encode(file)
 	return new Buffer(bitmap).toString('base64');
 }
 
-
+var mqpasswd = 'test';
+var mquser = 'test';
+var basesixfourdecode = 0;
 //function for beginning a mqtt connection to a server, listening to topic defined by subtopic and publishing to pubtopic
 function shell ()
 {
 	//this is where we connect
-	var client  = mqtt.connect('mqtt://' + servername);
+	var client  = mqtt.connect('mqtt://' + servername, {'username' : mquser,'password' : mqpasswd});
 	console.log("mqtt.connect " + servername);
 
 	///on client connection, we subscribe to the subtopic
 //check for base64
-if basesixfourdecode {
+if (basesixfourdecode == 1) {
 
   client.subscribe(subtopic, function() {
     client.on('message', function(topic, message, packet) {
