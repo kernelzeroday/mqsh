@@ -16,7 +16,7 @@ var colors = require("colors/safe");
 var readcommand = require('readcommand');
 var argv = require('optimist').argv;
 var fs = require('fs');
-var bitcoin = require('bitcoin');
+//var bitcoin = require('bitcoin');
 require('shelljs/global');
 // function to encode file data to base64 encoded string
 function base64_encode(file)
