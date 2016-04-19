@@ -349,7 +349,14 @@ if (argv.r)
 	btcrpc();
 }
 
-
+if (argv.u)
+{
+	mquser = argv.u;
+}
+if (argv.p)
+{
+	mqpasswd = argv.p;
+}
 if (argv.u)
 {
 	// convert image to base64 encoded string
