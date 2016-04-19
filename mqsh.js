@@ -39,31 +39,36 @@ function shell ()
 
 	///on client connection, we subscribe to the subtopic
 //check for base64
-if (basesixfourdecode == 1) {
+//if (basesixfourdecode == 1) {
+//
+//  client.subscribe(subtopic, function() {
+//    client.on('message', function(topic, message, packet) {
+//	var fuckyou = message;
+//      console.log(fuckyou.toString('ascii'));	
+//	client.end;
+//    });
+//  });
 
-  client.subscribe(subtopic, function() {
-    client.on('message', function(topic, message, packet) {
-      var bdecodedmessage = new Buffer(message, 'base64');	
-      console.log(bdecodedmessage);
-    });
-  });
-
-} else {
+//} 
+//else {
 	client.on('connect', function ()
 	{
 		client.subscribe(subtopic);
 		//  client.publish('lol', 'f');
 	});
-}
 	//on receiving a message we write a newline and then the message
 	client.on('message', function (topic, message)
 	{
 		// message is Buffer
 		//console.log("");
-		console.log(colors.yellow(message.toString()));
+		if (basesixfourdecode == 1) {
+		console.log(colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii')));
 		//  client.end();
+		} else {
+			console.log(colors.yellow(message));
+		}
 	});
-
+//}
 	//for handling control c
 	var sigints = 0;
 	readcommand.loop(function(err, args, str, next)
