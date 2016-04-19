@@ -36,12 +36,23 @@ function shell ()
 	console.log("mqtt.connect " + servername);
 
 	///on client connection, we subscribe to the subtopic
+//check for base64
+if basesixfourdecode {
+
+  client.subscribe(subtopic, function() {
+    client.on('message', function(topic, message, packet) {
+      var bdecodedmessage = new Buffer(message, 'base64');	
+      console.log(bdecodedmessage);
+    });
+  });
+
+} else {
 	client.on('connect', function ()
 	{
 		client.subscribe(subtopic);
 		//  client.publish('lol', 'f');
 	});
-
+}
 	//on receiving a message we write a newline and then the message
 	client.on('message', function (topic, message)
 	{
@@ -283,7 +294,11 @@ if (argv.h)
 {
 	servername = argv.h;
 }
-
+//b64
+if (argv.b)
+{
+	var basesixfourdecode = 1;
+}
 
 if (argv.p)
 {
