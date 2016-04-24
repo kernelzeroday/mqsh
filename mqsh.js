@@ -16,7 +16,7 @@ var colors = require("colors/safe");
 var readcommand = require('readcommand');
 var argv = require('optimist').argv;
 var fs = require('fs');
-var bitcoin = require('bitcoin');
+//var bitcoin = require('bitcoin');
 require('shelljs/global');
 // function to encode file data to base64 encoded string
 function base64_encode(file)
@@ -27,30 +27,48 @@ function base64_encode(file)
 	return new Buffer(bitmap).toString('base64');
 }
 
-
+var mqpasswd = 'test';
+var mquser = 'test';
+var basesixfourdecode = 0;
 //function for beginning a mqtt connection to a server, listening to topic defined by subtopic and publishing to pubtopic
 function shell ()
 {
 	//this is where we connect
-	var client  = mqtt.connect('mqtt://' + servername);
+	var client  = mqtt.connect('mqtt://' + servername, {'username' : mquser,'password' : mqpasswd});
 	console.log("mqtt.connect " + servername);
 
 	///on client connection, we subscribe to the subtopic
+//check for base64
+//if (basesixfourdecode == 1) {
+//
+//  client.subscribe(subtopic, function() {
+//    client.on('message', function(topic, message, packet) {
+//	var fuckyou = message;
+//      console.log(fuckyou.toString('ascii'));	
+//	client.end;
+//    });
+//  });
+
+//} 
+//else {
 	client.on('connect', function ()
 	{
 		client.subscribe(subtopic);
 		//  client.publish('lol', 'f');
 	});
-
 	//on receiving a message we write a newline and then the message
 	client.on('message', function (topic, message)
 	{
 		// message is Buffer
 		//console.log("");
-		console.log(colors.yellow(message.toString()));
+		if (basesixfourdecode == 1) {
+		console.log(colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii')));
 		//  client.end();
+		} else {
+			console.log(colors.yellow(message));
+		}
 	});
-
+//}
 	//for handling control c
 	var sigints = 0;
 	readcommand.loop(function(err, args, str, next)
@@ -283,7 +301,11 @@ if (argv.h)
 {
 	servername = argv.h;
 }
-
+//b64
+if (argv.b)
+{
+	var basesixfourdecode = 1;
+}
 
 if (argv.p)
 {
@@ -332,7 +354,14 @@ if (argv.r)
 	btcrpc();
 }
 
-
+if (argv.u)
+{
+	mquser = argv.u;
+}
+if (argv.m)
+{
+	mqpasswd = argv.m;
+}
 if (argv.u)
 {
 	// convert image to base64 encoded string
