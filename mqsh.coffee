@@ -200,11 +200,6 @@ subtopic = 'data'
 pubtopic = 'shell'
 # take in argument from cmdline as servername for mqtt connection
 servername = 'localhost'
-#old style server argument passing
-#var procargs = process.argv.slice(2);
-#if (process.argv[2] != null || process.argv[2] != undefined) {
-#        var servername = procargs;
-#}
 #new style
 if argv.h
   servername = argv.h
@@ -233,11 +228,11 @@ if argv.m
   mqpasswd = argv.m
 if argv.u
   # convert image to base64 encoded string
-  base64str = base64_encode(argv.upload)
+  base64str = base64_encode(argv.u)
   console.log base64str
   client = mqtt.connect('mqtt://' + servername)
   console.log 'mqtt.connect ' + servername
-  client.publish pubtopic, '_binary_' + ' ' + argv.upload + ' ' + base64str
+  client.publish pubtopic, '_binary_' + ' ' + argv.u + ' ' + base64str
   exit
 if argv.e
   rpcuser = argv.e
