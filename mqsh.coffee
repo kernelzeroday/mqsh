@@ -17,7 +17,6 @@ argv = require('optimist').argv
 fs = require('fs')
 #var bitcoin = require('bitcoin');
 # function to encode file data to base64 encoded string
-base64encode = 0
 base64_encode = (file) ->
   # read binary data
   bitmap = fs.readFileSync(file)
@@ -77,8 +76,9 @@ shell = ->
       sigints = 0
     # handle the input and send to pubtopic
     #console.log('Received args: %s', JSON.stringify(args));
-    if base64encode is true
-      sendme = new Buffer args.join(' ').toString('base64')
+    if basesixfourencode is true
+      sendme = new Buffer(args.join(' ')).toString('base64')
+
       client.publish pubtopic, sendme
     else
       client.publish pubtopic, args.join(' ')
@@ -122,6 +122,7 @@ require 'shelljs/global'
 mqpasswd = 'test'
 mquser = 'test'
 basesixfourdecode = 0
+basesixfourencode = false
 #bit rpc shell
 btchost = 'localhost'
 btcport = '18332'
@@ -211,7 +212,7 @@ if argv.h
 if argv.b
   basesixfourdecode = 1
 if argv.k
-  base64encode = 1
+  basesixfourencode = true
 if argv.p
   pubtopic = argv.p
 if argv.t
