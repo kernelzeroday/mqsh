@@ -17,7 +17,7 @@ argv = require('optimist').argv
 fs = require('fs')
 #var bitcoin = require('bitcoin');
 # function to encode file data to base64 encoded string
-
+base64encode = 0
 base64_encode = (file) ->
   # read binary data
   bitmap = fs.readFileSync(file)
@@ -77,7 +77,11 @@ shell = ->
       sigints = 0
     # handle the input and send to pubtopic
     #console.log('Received args: %s', JSON.stringify(args));
-    client.publish pubtopic, args.join(' ')
+    if base64encode is true
+      sendme = new Buffer args.join(' ').toString('base64')
+      client.publish pubtopic, sendme
+    else
+      client.publish pubtopic, args.join(' ')
     next()
   return
 
@@ -206,6 +210,8 @@ if argv.h
 #b64
 if argv.b
   basesixfourdecode = 1
+if argv.k
+  base64encode = 1
 if argv.p
   pubtopic = argv.p
 if argv.t
