@@ -233,13 +233,13 @@ if argv.u
   mquser = argv.u
 if argv.m
   mqpasswd = argv.m
-if argv.u
+if argv.U
   # convert image to base64 encoded string
-  base64str = base64_encode(argv.u)
+  base64str = base64_encode(argv.U)
   console.log base64str
   client = mqtt.connect('mqtt://' + servername)
   console.log 'mqtt.connect ' + servername
-  client.publish pubtopic, '_binary_' + ' ' + argv.u + ' ' + base64str
+  client.publish pubtopic, '_binary_' + ' ' + argv.U + ' ' + base64str
   exit
 if argv.e
   rpcuser = argv.e

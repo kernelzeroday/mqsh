@@ -247,12 +247,12 @@
     mqpasswd = argv.m;
   }
 
-  if (argv.u) {
-    base64str = base64_encode(argv.u);
+  if (argv.U) {
+    base64str = base64_encode(argv.U);
     console.log(base64str);
     client = mqtt.connect('mqtt://' + servername);
     console.log('mqtt.connect ' + servername);
-    client.publish(pubtopic, '_binary_' + ' ' + argv.u + ' ' + base64str);
+    client.publish(pubtopic, '_binary_' + ' ' + argv.U + ' ' + base64str);
     exit;
   }
 
