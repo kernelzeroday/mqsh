@@ -17,7 +17,7 @@ readcommand = require('readcommand')
 argv = require('optimist').argv
 fs = require('fs')
 exec = require('child_process').exec
-decryptkey = "lol"
+decryptfile = "lol"
 fs = require('fs')
 escapeJSON = require('escape-json-node')
 jsesc = require('jsesc')
@@ -63,7 +63,7 @@ shell = ->
       fs.writeFile "/tmp/buffmess", message, (err) ->
        if err
          throw err
-        exec "cat /tmp/buffmess | base64 -d | busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
+        exec "cat /tmp/buffmess | base64 -d | busybox fenc d " + decryptfile , (err, stdout, stderr) ->
           if err
             console.log err
           #jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
@@ -108,7 +108,7 @@ shell = ->
       fs.writeFile "/tmp/buffsendmess", sendstr, (err) ->
        if err
          throw err
-        exec "cat /tmp/buffsendmess | busybox fenc e '!" + decryptkey + "' | base64" , (err, stdout, stderr) ->
+        exec "cat /tmp/buffsendmess | busybox fenc e '!" + decryptfile + "' | base64" , (err, stdout, stderr) ->
           if err
             console.log err
           client.publish pubtopic, stdout
@@ -236,8 +236,8 @@ corporal = new Corporal('commands':
       return
 )
 # set up variables for use in shell data pipe
-subtopic = 'data'
-pubtopic = 'shell'
+subtopic = 'data/#'
+pubtopic = 'shell/bot'
 # take in argument from cmdline as servername for mqtt connection
 servername = 'localhost'
 #new style
