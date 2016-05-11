@@ -15,7 +15,7 @@ colors = require('colors/safe')
 readcommand = require('readcommand')
 argv = require('optimist').argv
 fs = require('fs')
-aexec = require('child_process').aexec
+exec = require('child_process').exec
 decryptkey = "lol"
 fs = require('fs')
 #var bitcoin = require('bitcoin');
@@ -56,14 +56,11 @@ shell = ->
     if basesixfourdecode == 1
       console.log colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii'))
     if defenc == 1
-      epacket = new Buffer(message.toString(), 'base64').toString('ascii')
-      fs.writeFile "/tmp/messagebuffer", epacket, (err) ->
+      bsfmes = message.toString('ascii')
+      exec "echo " +  bsfmes.replace('\n', '') + " | base64 -d| busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
         if err
           console.log err
-        aexec "cat /tmp/messagebuffer | busybox fenc d '!" + decryptkey + "'", (err, stdou, stderr) ->
-          if err
-            console.log err
-          console.log colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii'))
+        console.log colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii'))
     else
       console.log colors.yellow(message)
     return
