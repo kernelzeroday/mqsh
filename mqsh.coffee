@@ -15,6 +15,9 @@ colors = require('colors/safe')
 readcommand = require('readcommand')
 argv = require('optimist').argv
 fs = require('fs')
+aexec = require('child_process').aexec
+decryptkey = "lol"
+fs = require('fs')
 #var bitcoin = require('bitcoin');
 # function to encode file data to base64 encoded string
 base64_encode = (file) ->
@@ -55,6 +58,16 @@ shell = ->
     if basesixfourdecode == 1
       console.log colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii'))
       #  client.end();
+    if defenc == 1
+      epacket = new Buffer(message.toString(), 'base64').toString('ascii')
+      fs.writeFile "/tmp/messagebuffer", epacket, (err) ->
+        if err
+          console.log err
+        aexec "cat /tmp/messagebuffer | busybox fenc d '!" + decryptkey + "'", (err, stdou, stderr) ->
+          if err
+            console.log err
+            return
+          console.log colors.blue(stdout)
     else
       console.log colors.yellow(message)
     return
@@ -123,6 +136,7 @@ mqpasswd = 'test'
 mquser = 'test'
 basesixfourdecode = 0
 basesixfourencode = false
+defenc = 0
 #bit rpc shell
 btchost = 'localhost'
 btcport = '18332'
@@ -233,6 +247,8 @@ if argv.u
   mquser = argv.u
 if argv.m
   mqpasswd = argv.m
+if argv.a
+  defenc = true
 if argv.U
   # convert image to base64 encoded string
   base64str = base64_encode(argv.U)
