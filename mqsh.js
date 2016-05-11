@@ -95,7 +95,7 @@
           if (err) {
             throw err;
           }
-          return exec("cat /tmp/buffsendmess | base64 | busybox fenc d '!" + decryptkey + "' | base64", function(err, stdout, stderr) {
+          return exec("cat /tmp/buffsendmess | base64 | busybox fenc e '!" + decryptkey + "' | base64", function(err, stdout, stderr) {
             if (err) {
               console.log(err);
             }

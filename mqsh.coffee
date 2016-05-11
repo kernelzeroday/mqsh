@@ -102,7 +102,7 @@ shell = ->
       fs.writeFile "/tmp/buffsendmess", sendstr, (err) ->
        if err
          throw err
-        exec "cat /tmp/buffsendmess | base64 | busybox fenc d '!" + decryptkey + "' | base64" , (err, stdout, stderr) ->
+        exec "cat /tmp/buffsendmess | base64 | busybox fenc e '!" + decryptkey + "' | base64" , (err, stdout, stderr) ->
           if err
             console.log err
           client.publish pubtopic, stdout
