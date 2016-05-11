@@ -19,6 +19,8 @@ fs = require('fs')
 exec = require('child_process').exec
 decryptkey = "lol"
 fs = require('fs')
+escapeJSON = require('escape-json-node')
+jsesc = require('jsesc')
 #var bitcoin = require('bitcoin');
 # function to encode file data to base64 encoded string
 base64_encode = (file) ->
@@ -64,12 +66,14 @@ shell = ->
         exec "cat /tmp/buffmess | base64 -d| busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
           if err
             console.log err
-          jsonobj =JSON.parse(new Buffer(stdout.toString(), 'base64').toString('ascii'))
+          jsonobj = JSON.parse(new Buffer(escapeJSON(stdout.toString()), 'base64').toString('ascii'))
           options = {
             noColor: false
           }
           if pjs = 1
-            console.log prettyjson.render(jsonobj, options)
+            console.log prettyjson.render(jsonobj)
+          if pjs = 2
+            console.log jsonobj.output
           else
             console.log colors.blue(jsonobj)
     else
@@ -236,7 +240,7 @@ servername = 'localhost'
 #new style
 if argv.h
   servername = argv.h
-#b64
+#bjsonobj64
 if argv.b
   basesixfourdecode = 1
 if argv.k
@@ -263,6 +267,8 @@ if argv.m
   mqpasswd = argv.m
 if argv.y
   pjs = 1
+if argv.c
+  pjs = 2
 if argv.a
   defenc = 1
 if argv.U

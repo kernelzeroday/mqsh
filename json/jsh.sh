@@ -14,7 +14,7 @@ cwd=$bbj"$(pwd)"
 shell=$bbj"$(echo $SHELL)"
 cmdline=$bbj"$@"
 #output=$bbj"$($cmdline)"
-output=`busybox jshon -s "$($@)"`
+output=$bbj"$($@)"
 getstty=$bbj"$(stty)"
 term=$bbj"$(echo $TERM)"
 cpuname=$bbj"$(cat /proc/cpuinfo | grep name)"
@@ -35,7 +35,7 @@ echo '{
 "stty": "'$getstty'",
 "cwd": "'$cwd'",
 "cmdline": "'$cmdline'",
-"output": '$output'
+"output": "'$output'"
 }'
 
 
