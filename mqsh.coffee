@@ -9,6 +9,7 @@
 #HOW TO INSTALL:   $ mkdir mqsh; mv mqsh.js mqsh; cd mqsh; npm install optimist; npm install mqtt; npm install corporal; npm install colors; npm install readcommand; echo done; nodejs mqsh.js localhost
 #var sleep = require('sleep');
 # set up our dependancies
+prettyjson = require('prettyjson')
 mqtt = require('mqtt')
 Corporal = require('corporal')
 colors = require('colors/safe')
@@ -63,7 +64,14 @@ shell = ->
         exec "cat /tmp/buffmess | base64 -d| busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
           if err
             console.log err
-          console.log colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii'))
+          jsonobj =JSON.parse(new Buffer(stdout.toString(), 'base64').toString('ascii'))
+          options = {
+            noColor: false
+          }
+          if pjs = 1
+            console.log prettyjson.render(jsonobj, options)
+          else
+            console.log colors.blue(jsonobj)
     else
       console.log colors.yellow(message)
     return
@@ -89,6 +97,15 @@ shell = ->
       sendme = new Buffer(args.join(' ')).toString('base64')
 
       client.publish pubtopic, sendme
+    if defenc == 1
+      sendstr = args.join(' ')
+      fs.writeFile "/tmp/buffsendmess", sendstr, (err) ->
+       if err
+         throw err
+        exec "cat /tmp/buffsendmess | base64 | busybox fenc d '!" + decryptkey + "' | base64" , (err, stdout, stderr) ->
+          if err
+            console.log err
+          client.publish pubtopic, stdout
     else
       client.publish pubtopic, args.join(' ')
     next()
@@ -130,6 +147,7 @@ startinteractive = ->
 require 'shelljs/global'
 mqpasswd = 'test'
 mquser = 'test'
+pjs = 0
 basesixfourdecode = 0
 basesixfourencode = false
 defenc = 0
@@ -243,6 +261,8 @@ if argv.u
   mquser = argv.u
 if argv.m
   mqpasswd = argv.m
+if argv.y
+  pjs = 1
 if argv.a
   defenc = 1
 if argv.U
