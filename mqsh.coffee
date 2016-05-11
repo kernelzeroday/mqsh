@@ -67,7 +67,7 @@ shell = ->
           if err
             console.log err
             return
-          console.log colors.blue(stdout)
+          console.log colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii'))
     else
       console.log colors.yellow(message)
     return
