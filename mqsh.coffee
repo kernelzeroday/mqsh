@@ -72,7 +72,7 @@ shell = ->
           }
           if pjs = 1
             console.log prettyjson.render(jsonobj)
-          if pjs = 2
+          if simpleout = 1
             console.log jsonobj.output
           else
             console.log colors.blue(jsonobj)
@@ -268,7 +268,7 @@ if argv.m
 if argv.y
   pjs = 1
 if argv.c
-  pjs = 2
+  simpleout = 1
 if argv.a
   defenc = 1
 if argv.U
