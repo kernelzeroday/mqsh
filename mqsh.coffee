@@ -63,11 +63,12 @@ shell = ->
       fs.writeFile "/tmp/buffmess", message, (err) ->
        if err
          throw err
-        exec "cat /tmp/buffmess | base64 -d| busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
+        exec "cat /tmp/buffmess | base64 -d | busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
           if err
             console.log err
-          jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
-          jsonobj = JSON.parse(new Buffer(escapeJSON(stdout.toString()), 'base64').toString('ascii'))
+          #jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
+          jsonstr = stdout
+          jsonobj = JSON.parse(jsonstr)
           options = {
             noColor: false
           }
@@ -107,7 +108,7 @@ shell = ->
       fs.writeFile "/tmp/buffsendmess", sendstr, (err) ->
        if err
          throw err
-        exec "cat /tmp/buffsendmess | base64 | busybox fenc e '!" + decryptkey + "' | base64" , (err, stdout, stderr) ->
+        exec "cat /tmp/buffsendmess | busybox fenc e '!" + decryptkey + "' | base64" , (err, stdout, stderr) ->
           if err
             console.log err
           client.publish pubtopic, stdout
