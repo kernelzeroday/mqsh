@@ -66,8 +66,8 @@ shell = ->
         aexec "cat /tmp/messagebuffer | busybox fenc d '!" + decryptkey + "'", (err, stdou, stderr) ->
           if err
             console.log err
-            return
           console.log colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii'))
+      return
     else
       console.log colors.yellow(message)
     return
