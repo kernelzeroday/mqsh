@@ -66,16 +66,17 @@ shell = ->
         exec "cat /tmp/buffmess | base64 -d| busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
           if err
             console.log err
+          jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
           jsonobj = JSON.parse(new Buffer(escapeJSON(stdout.toString()), 'base64').toString('ascii'))
           options = {
             noColor: false
           }
-          if pjs = 1
+          if pjs == 1
             console.log prettyjson.render(jsonobj)
-          if simpleout = 1
-            console.log jsonobj.output
-          else
-            console.log colors.blue(jsonobj)
+          if simpleout == 1
+            console.log colors.blue(jsonobj.output)
+          if pjs == 0 and simpleout == 0
+            console.log colors.blue(jsonstr)
     else
       console.log colors.yellow(message)
     return
@@ -155,6 +156,7 @@ pjs = 0
 basesixfourdecode = 0
 basesixfourencode = false
 defenc = 0
+simpleout = 0
 #bit rpc shell
 btchost = 'localhost'
 btcport = '18332'
