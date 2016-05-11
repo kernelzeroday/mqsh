@@ -272,7 +272,7 @@
   }
 
   if (argv.a) {
-    defenc = true;
+    defenc = 1;
   }
 
   if (argv.U) {

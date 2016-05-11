@@ -248,7 +248,7 @@ if argv.u
 if argv.m
   mqpasswd = argv.m
 if argv.a
-  defenc = true
+  defenc = 1
 if argv.U
   # convert image to base64 encoded string
   base64str = base64_encode(argv.U)
