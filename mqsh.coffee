@@ -73,11 +73,11 @@ shell = ->
             noColor: false
           }
           if pjs == 1
-            console.log prettyjson.render(jsonobj)
+            console.log prettyjson.render(jsonobj), '\n'
           if simpleout == 1
-            console.log colors.blue(jsonobj.output)
+            console.log colors.blue(jsonobj.output),'\n'
           if pjs == 0 and simpleout == 0
-            console.log colors.blue(jsonstr)
+            console.log colors.blue(jsonstr), '\n'
     else
       console.log colors.yellow(message)
     return
