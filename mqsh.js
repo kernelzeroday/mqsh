@@ -43,7 +43,7 @@
       }
       if (defenc === 1) {
         bsfmes = message.toString('ascii');
-        fs.writeFile("/tmp/buffmess", bsfmes.replace('\n', ''), function(err) {
+        fs.writeFile("/tmp/buffmess", message, function(err) {
           if (err) {
             throw err;
           }

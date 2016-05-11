@@ -57,7 +57,7 @@ shell = ->
       console.log colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii'))
     if defenc == 1
       bsfmes = message.toString('ascii')
-      fs.writeFile "/tmp/buffmess", bsfmes.replace('\n', ''), (err) ->
+      fs.writeFile "/tmp/buffmess", message, (err) ->
        if err
          throw err
         exec "cat /tmp/buffmess | base64 -d| busybox fenc d '!" + decryptkey + "'" , (err, stdout, stderr) ->
