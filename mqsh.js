@@ -43,11 +43,16 @@
       }
       if (defenc === 1) {
         bsfmes = message.toString('ascii');
-        exec("echo " + bsfmes.replace('\n', '') + " | base64 -d| busybox fenc d '!" + decryptkey + "'", function(err, stdout, stderr) {
+        fs.writeFile("/tmp/buffmess", bsfmes.replace('\n', ''), function(err) {
           if (err) {
-            console.log(err);
+            throw err;
           }
-          return console.log(colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii')));
+          return exec("cat /tmp/buffmess | base64 -d| busybox fenc d '!" + decryptkey + "'", function(err, stdout, stderr) {
+            if (err) {
+              console.log(err);
+            }
+            return console.log(colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii')));
+          });
         });
       } else {
         console.log(colors.yellow(message));
