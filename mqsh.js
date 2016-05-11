@@ -50,7 +50,6 @@
           return aexec("cat /tmp/messagebuffer | busybox fenc d '!" + decryptkey + "'", function(err, stdou, stderr) {
             if (err) {
               console.log(err);
-              return;
             }
             return console.log(colors.blue(new Buffer(stdout.toString(), 'base64').toString('ascii')));
           });

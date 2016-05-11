@@ -53,11 +53,8 @@ shell = ->
     return
   #on receiving a message we write a newline and then the message
   client.on 'message', (topic, message) ->
-    # message is Buffer
-    #console.log("");
     if basesixfourdecode == 1
       console.log colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii'))
-      #  client.end();
     if defenc == 1
       epacket = new Buffer(message.toString(), 'base64').toString('ascii')
       fs.writeFile "/tmp/messagebuffer", epacket, (err) ->
