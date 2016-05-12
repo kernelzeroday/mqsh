@@ -94,7 +94,7 @@
       } else {
         sigints = 0;
       }
-      if (basesixfourencode === true) {
+      if (basesixfourencode === true && defenc === 0) {
         sendme = new Buffer(args.join(' ')).toString('base64');
         client.publish(pubtopic, sendme);
       }

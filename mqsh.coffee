@@ -99,7 +99,7 @@ shell = ->
       sigints = 0
     # handle the input and send to pubtopic
     #console.log('Received args: %s', JSON.stringify(args));
-    if basesixfourencode is true
+    if basesixfourencode is true and defenc == 0
       sendme = new Buffer(args.join(' ')).toString('base64')
 
       client.publish pubtopic, sendme
