@@ -55,14 +55,15 @@
             console.log(err);
           }
           jsonstr = stdout;
-          jsonobj = JSON.parse(jsonstr);
           options = {
             noColor: false
           };
           if (pjs === 1) {
+            jsonobj = JSON.parse(jsonstr);
             console.log(prettyjson.render(jsonobj), '\n');
           }
           if (simpleout === 1) {
+            jsonobj = JSON.parse(jsonstr);
             console.log(colors.blue(jsonobj.output), '\n');
           }
           if (pjs === 0 && simpleout === 0) {
