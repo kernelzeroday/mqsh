@@ -75,8 +75,8 @@ shell = ->
           console.log colors.blue(jsonobj.output),'\n'
         if pjs == 0 and simpleout == 0
           console.log colors.blue(jsonstr), '\n'
-  else
-    console.log colors.yellow(message)
+        else
+          console.log colors.yellow(message)
   return
   #}
   #for handling control c

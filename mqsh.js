@@ -49,35 +49,31 @@
       }
       if (defenc === 1) {
         bsfmes = message.toString('ascii');
-        fs.writeFile("/tmp/buffmess", message, function(err) {
+        return exec("echo '" + bsfmes + "'| base64 -d | busybox fenc d " + decryptfile, function(err, stdout, stderr) {
+          var jsonobj, jsonstr, options;
           if (err) {
-            throw err;
+            console.log(err);
           }
-          return exec("cat /tmp/buffmess | base64 -d | busybox fenc d " + decryptfile, function(err, stdout, stderr) {
-            var jsonobj, jsonstr, options;
-            if (err) {
-              console.log(err);
-            }
-            jsonstr = stdout;
-            jsonobj = JSON.parse(jsonstr);
-            options = {
-              noColor: false
-            };
-            if (pjs === 1) {
-              console.log(prettyjson.render(jsonobj), '\n');
-            }
-            if (simpleout === 1) {
-              console.log(colors.blue(jsonobj.output), '\n');
-            }
-            if (pjs === 0 && simpleout === 0) {
-              return console.log(colors.blue(jsonstr), '\n');
-            }
-          });
+          jsonstr = stdout;
+          jsonobj = JSON.parse(jsonstr);
+          options = {
+            noColor: false
+          };
+          if (pjs === 1) {
+            console.log(prettyjson.render(jsonobj), '\n');
+          }
+          if (simpleout === 1) {
+            console.log(colors.blue(jsonobj.output), '\n');
+          }
+          if (pjs === 0 && simpleout === 0) {
+            return console.log(colors.blue(jsonstr), '\n');
+          } else {
+            return console.log(colors.yellow(message));
+          }
         });
-      } else {
-        console.log(colors.yellow(message));
       }
     });
+    return;
     sigints = 0;
     readcommand.loop(function(err, args, str, next) {
       var sendme, sendstr;
@@ -94,7 +90,7 @@
       } else {
         sigints = 0;
       }
-      if (basesixfourencode === true && defenc === 0) {
+      if (basesixfourencode === true && defenc === false) {
         sendme = new Buffer(args.join(' ')).toString('base64');
         client.publish(pubtopic, sendme);
       }
