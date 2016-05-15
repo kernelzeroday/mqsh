@@ -65,13 +65,14 @@ shell = ->
           console.log err
         #jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
         jsonstr = stdout
-        jsonobj = JSON.parse(jsonstr)
         options = {
           noColor: false
         }
         if pjs == 1
+          jsonobj = JSON.parse(jsonstr)
           console.log prettyjson.render(jsonobj), '\n'
         if simpleout == 1
+          jsonobj = JSON.parse(jsonstr)
           console.log colors.blue(jsonobj.output),'\n'
         if pjs == 0 and simpleout == 0
           console.log colors.blue(jsonstr), '\n'
