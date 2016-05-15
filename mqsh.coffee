@@ -60,27 +60,24 @@ shell = ->
       console.log colors.yellow(new Buffer(message.toString(), 'base64').toString('ascii'))
     if defenc == 1
       bsfmes = message.toString('ascii')
-      fs.writeFile "/tmp/buffmess", message, (err) ->
-       if err
-         throw err
-        exec "cat /tmp/buffmess | base64 -d | busybox fenc d " + decryptfile , (err, stdout, stderr) ->
-          if err
-            console.log err
-          #jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
-          jsonstr = stdout
-          jsonobj = JSON.parse(jsonstr)
-          options = {
-            noColor: false
-          }
-          if pjs == 1
-            console.log prettyjson.render(jsonobj), '\n'
-          if simpleout == 1
-            console.log colors.blue(jsonobj.output),'\n'
-          if pjs == 0 and simpleout == 0
-            console.log colors.blue(jsonstr), '\n'
-    else
-      console.log colors.yellow(message)
-    return
+      exec "echo '" + bsfmes  +  "'| base64 -d | busybox fenc d " + decryptfile , (err, stdout, stderr) ->
+        if err
+          console.log err
+        #jsonstr = new Buffer(stdout.toString(), 'base64').toString('ascii')
+        jsonstr = stdout
+        jsonobj = JSON.parse(jsonstr)
+        options = {
+          noColor: false
+        }
+        if pjs == 1
+          console.log prettyjson.render(jsonobj), '\n'
+        if simpleout == 1
+          console.log colors.blue(jsonobj.output),'\n'
+        if pjs == 0 and simpleout == 0
+          console.log colors.blue(jsonstr), '\n'
+  else
+    console.log colors.yellow(message)
+  return
   #}
   #for handling control c
   sigints = 0
@@ -99,7 +96,7 @@ shell = ->
       sigints = 0
     # handle the input and send to pubtopic
     #console.log('Received args: %s', JSON.stringify(args));
-    if basesixfourencode is true and defenc == 0
+    if basesixfourencode is true and defenc is false
       sendme = new Buffer(args.join(' ')).toString('base64')
 
       client.publish pubtopic, sendme
