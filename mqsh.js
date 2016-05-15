@@ -49,7 +49,7 @@
       }
       if (defenc === 1) {
         bsfmes = message.toString('ascii');
-        return exec("echo '" + bsfmes + "'| base64 -d | busybox fenc d " + decryptfile, function(err, stdout, stderr) {
+        exec("echo '" + bsfmes + "'| base64 -d | busybox fenc d " + decryptfile, function(err, stdout, stderr) {
           var jsonobj, jsonstr, options;
           if (err) {
             console.log(err);
@@ -74,7 +74,6 @@
         });
       }
     });
-    return;
     sigints = 0;
     readcommand.loop(function(err, args, str, next) {
       var sendme, sendstr;

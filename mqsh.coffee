@@ -78,7 +78,7 @@ shell = ->
           console.log colors.blue(jsonstr), '\n'
         else
           console.log colors.yellow(message)
-  return
+    return
   #}
   #for handling control c
   sigints = 0
